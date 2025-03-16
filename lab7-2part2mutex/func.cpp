@@ -24,13 +24,14 @@ void sortPart(std::string name, std::string* pName, double* arr, int len) {
 	}
 	for (int i = 0; i < len; i++)
 	{
+		while (*pName != "");
 		mut.lock();
 		std::cout << name << "\t";
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		std::cout << arr[i] << std::endl;
 		mut.unlock();
+		
 	}
-	while (*pName != "");
 	mut.lock();
 	*pName = name;
 	intCon++;

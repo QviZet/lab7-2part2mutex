@@ -31,6 +31,7 @@ int main(int argc, const char* argv[]) {
 	std::future <void> thread3(std::async(sortArr, "thread3", pName, arr, frstPart, scndPart, len));
 	std::unique_lock<std::mutex> lockMain(mutMain);
 	conMain.wait(lockMain);
+
 	std::cout << "\nthread3 completed\n\nSorting completed\n";
 
 	delete[] arr;

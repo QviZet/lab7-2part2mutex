@@ -2,8 +2,7 @@
 
 std::mutex mut, mut3;
 std::condition_variable con3, conMain;
-bool flag = false;
-int intCon;
+std::atomic<int> intCon = 0;
 
 void sortPart(std::string name, std::string* pName, double* arr, int len) {
 	double min = 1001;
@@ -30,12 +29,12 @@ void sortPart(std::string name, std::string* pName, double* arr, int len) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		std::cout << arr[i] << std::endl;
 		mut.unlock();
-		
 	}
-	mut.lock();
+
+	mut3.lock();
 	*pName = name;
-	intCon++;
-	mut.unlock();
+	intCon.fetch_add(1);
+	mut3.unlock();
 	con3.notify_one();
 }
 
@@ -44,15 +43,15 @@ void sortArr(std::string name, std::string* pName, double* arr, double* frstPart
 	while (intCon != 3) {
 		if (intCon == 1) {
 			mut.lock();
-			std::cout << "\n" << *pName << "\tcompleted\n\n";
-			intCon = 2;
+			std::cout << "\n" << *pName << "\tcompleted1\n\n";
+			intCon.fetch_add(1);
 			*pName = "";
 			mut.unlock();
 		}
 		con3.wait(lock);
 	}
 
-	std::cout << "\n" << *pName << "\tcompleted\n\n";
+	std::cout << "\n" << *pName << "\tcompleted2\n\n";
 
 	int frst = 0, scnd = 0, k = 0;
 	while ((frst != len / 2) && (scnd != len / 2)) {

@@ -3,7 +3,7 @@
 std::mutex mutMain;
 
 int main(int argc, const char* argv[]) {
-	const int len = 2;
+	const int len = 200;
 	double* arr;
 	arr = new double[len];
 	std::string threadName;

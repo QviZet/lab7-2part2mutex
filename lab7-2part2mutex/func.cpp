@@ -26,9 +26,10 @@ void sortPart(std::string name, std::string* pName, double* arr, int len) {
 		while (*pName != "");
 		mut.lock();
 		std::cout << name << "\t";
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		std::cout << arr[i] << std::endl;
 		mut.unlock();
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
 	}
 
 	mut3.lock();
